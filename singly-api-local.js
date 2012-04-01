@@ -16,14 +16,21 @@ var APIClient = function(config) {
   }
 
   function setApiKey(apiKey) {
-    // changed from sessionStorage; see http://stackoverflow.com/questions/4383494/error-using-sessionstorage
-    localStorage.setItem("apiKey_" + config.host, apiKey);
+    if (window.location.protocol === 'file:') {
+      localStorage.setItem("apiKey_" + config.host, apiKey);
+    } else {
+      sessionStorage.setItem("apiKey_" + config.host, apiKey);
+    }
     return apiKey;
   }
 
   function getApiKey() {
-    // changed from sessionStorage (same as above)
-    var apiKey = localStorage.getItem("apiKey_" + config.host);
+    var apiKey;
+    if (window.location.protocol === 'file:') {
+      apiKey = localStorage.getItem("apiKey_" + config.host);
+    } else {
+      apiKey = sessionStorage.getItem("apiKey_" + config.host);
+    }
     // things get converted to strings in some browsers, so check those, just to be safe
     if(apiKey == 'null') return null;
     if(apiKey == 'undefined') return undefined;
