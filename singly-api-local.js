@@ -49,6 +49,16 @@ var APIClient = function(config) {
     });
   }
   
+  // This doesn't work for the path API: locker ends up with an id string (in double-quotes, not a number)
+  client.post = function(path, params, callback, error) {
+    if(path.indexOf('/') !== 0) path = '/' + path;
+    if(!callback && typeof params === 'function') {
+      callback = params;
+      params = {};
+    }
+    $.post(baseUrl + path, params, callback);
+  }
+  
   promptForAPIKey();
   return client;
 }

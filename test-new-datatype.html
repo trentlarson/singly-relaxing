@@ -22,7 +22,7 @@
           $('body').append('Previous Answer: ' + foo.question);
         });
       } else {
-        $.post(client.baseUrl+'/push/foo', {'data':[{'id':42, 'question':value}]}, function(data) {
+        client.post('/push/foo', {'data':[{'id':42, 'question':value}]}, function(data) {
           $('body').append('Updated OK? ' + data);
         });
       }
