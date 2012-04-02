@@ -16,9 +16,16 @@
       // This is to use the local locker; note that it requires our custom singly-api-local.js file.
       var client = new APIClient({baseUrl:'http://localhost:8042'});
 
-      client.getJSON('/push/foo/42', {}, function(foo) {
-        $('body').append('Previous Answer: ' + foo.question);
-      });
+      var value = prompt("42 is the answer to what question? (Cancel to see the previous answer.)");
+      if (value == null) {
+        client.getJSON('/push/foo/42', {}, function(foo) {
+          $('body').append('Previous Answer: ' + foo.question);
+        });
+      } else {
+        $.post(client.baseUrl+'/push/foo', {'data':[{'id':42, 'question':value}]}, function(data) {
+          $('body').append('Updated OK? ' + data);
+        });
+      }
 
       /** This grabs some standard contact data.
       client.getJSON('/Me/contacts', {limit: 5}, function(contacts) {
