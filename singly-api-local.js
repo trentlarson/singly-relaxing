@@ -2,6 +2,7 @@ var baseUrl = '';
 
 var APIClient = function(config) {
   if(!config) config = {};
+  if(config.baseUrl) baseUrl = config.baseUrl;
   config.host = config.host || 'singly.com';
   var apiHost = 'https://api.' + config.host + '/';
   var message = 'Please enter your API key from https://me.' + config.host + '/dashboard/settings#Settings-APIKey';

@@ -1,0 +1,41 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+
+  <!--
+  This is for working locally, enabling file:// URLs and local locker access,
+  replacing the one at https://singly.com/js/api.js
+  -->
+  <script src="singly-api-local.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    $(function() {
+
+      // This is to use the locker at singly.com.
+      //var client = new APIClient();
+      // This is to use the local locker; note that it requires our custom singly-api-local.js file.
+      var client = new APIClient({baseUrl:'http://localhost:8042'});
+
+      client.getJSON('/push/foo/42', {}, function(foo) {
+        $('body').append('Previous Answer: ' + foo.question);
+      });
+
+      /** This grabs some standard contact data.
+      client.getJSON('/Me/contacts', {limit: 5}, function(contacts) {
+        for(var i in contacts) {
+          for(key in contacts[i].accounts) {
+              if (contacts[i].accounts.hasOwnProperty(key)) {
+                $('body').append("," + key);
+              }
+          }
+        }
+      });
+      **/
+      
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
+
